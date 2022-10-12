@@ -1,5 +1,5 @@
-# TODO: Change the name of the org 
-org: sudkul
+#* TODO: Change the name of the org
+org: msen
 app: serverless-todo-app
 service: serverless-todo-app
 
@@ -57,6 +57,11 @@ functions:
           path: todos
           cors: true
           authorizer: Auth
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TODOS_TABLE}
 
   # TODO: Configure this function - 
   # Provide iamRoleStatements property. Decide the Actions and AWS Resource. 
