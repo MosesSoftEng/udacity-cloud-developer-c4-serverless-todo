@@ -66,7 +66,7 @@ async function verifyToken(authHeader: string): Promise<JwtPayload> {
   // Download cert info
   const response = await Axios.get(jwksUrl);
 
-  // Verify JWT tokken
+  // Verify JWT token
   return verify(
     token,
     `-----BEGIN CERTIFICATE-----\n${response.data.keys[0].x5c[0]}\n-----END CERTIFICATE-----`,
