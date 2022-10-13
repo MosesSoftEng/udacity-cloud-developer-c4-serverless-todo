@@ -9,24 +9,20 @@ import { TodoItem } from '../models/TodoItem'
 
 
 export class TodosAccess {
-	constructor(
-		private readonly docClient: DocumentClient = new AWS.DynamoDB.DocumentClient(),
-		private readonly TodosTable = process.env.TODOS_TABLE,
-		private readonly TodosIndex = process.env.TODOS_CREATED_AT_INDEX
-		) {
-	}
+  constructor(
+    private readonly docClient: DocumentClient = new AWS.DynamoDB.DocumentClient(),
+    private readonly TodosTable = process.env.TODOS_TABLE,
+    private readonly TodosIndex = process.env.TODOS_CREATED_AT_INDEX
+  ) { }
 
-	async getTodosForUser(userId): Promise<TodoItem[]> {
-		let result = await this.docClient.query({
-			TableName: this.TodosTable,
-			IndexName: this.TodosIndex,
-			KeyConditionExpression: 'userId = :userId',
-			ExpressionAttributeValues: {
-				':userId': userId
-			}
-		}).promise()
+  async createTodo(todo: TodoItem): Promise<TodoItem> {
+    console.log("Creating todo item")
 
-		const items = result.Items
-		return items as TodoItem[]
-	}
+    await this.docClient.put({
+      TableName: this.TodosTable,
+      Item: todo
+    }).promise()
+
+    return todo
+  }
 }
