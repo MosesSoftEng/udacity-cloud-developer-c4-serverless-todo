@@ -3,9 +3,9 @@
  */
 
 // Import todoAccess class which has logic for todos
-import { FilesAccess } from './filesAccess'
+import { FilesAccess } from '../dataLayer/filesAccess'
 import { createLogger } from '../utils/logger'
-import { AttachmentUtils } from './attachmentUtils';
+import { AttachmentUtils } from '../helpers/attachmentUtils';
 
 // Create a new class instance/ object
 const filesAccess = new FilesAccess()
