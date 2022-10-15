@@ -8,42 +8,20 @@ import { updateTodo } from '../../businessLogic/todos'
 import { UpdateTodoRequest } from '../../requests/UpdateTodoRequest'
 import { getUserId } from '../utils'
 
-export const handler = middy(async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
-		const todoId = event.pathParameters.todoId
-		const updatedTodo: UpdateTodoRequest = JSON.parse(event.body)
-		// TODO: Update a TODO item with the provided id using values in the "updatedTodo" object
+export const handler = middy(
+  async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
+    const todoId = event.pathParameters.todoId
+    const updatedTodo: UpdateTodoRequest = JSON.parse(event.body)
+    // TODO: Update a TODO item with the provided id using values in the "updatedTodo" object
 
-		const userId = getUserId(event);
-		const response = updateTodo(todoId, userId, updatedTodo);
 
-		if (response) {
-			return {
-				statusCode: 204,
-				headers: {
-					'Access-Control-Allow-Origin': '*',
-					'Access-Control-Allow-Credentials': true
-				},
-				body: JSON.stringify({})
-			}
-		}
-
-		return {
-			statusCode: 404,
-			headers: {
-				'Access-Control-Allow-Origin': '*',
-				'Access-Control-Allow-Credentials': true
-			},
-			body: JSON.stringify({
-				error: 'Todo not found'
-			})
-		}
-	}
+    return undefined
 )
 
 handler
-	.use(httpErrorHandler())
-	.use(
-		cors({
-			credentials: true
-		})
-	)
+  .use(httpErrorHandler())
+  .use(
+    cors({
+      credentials: true
+    })
+  )
